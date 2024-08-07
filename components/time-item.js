@@ -279,6 +279,12 @@ class TimeItem extends TimeItemSkeleton {
     this.#descriptionElement.addEventListener('input', () => this.#description= this.#descriptionElement.value );
     this.querySelector('.collapse-button').addEventListener('click', () => this.toggleDescriptionCollapse() );
 
+    // Disable dragging of the item inside the text field
+    this.#descriptionElement.addEventListener('dragstart', e => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
     // Drop down menu events
     const optionsMenu= this.querySelector('drop-down.options');
     optionsMenu.addEventListener('option-colorAsAbove', () => this.color= this.timeLine.aboveItemColor( this ));
