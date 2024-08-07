@@ -231,14 +231,14 @@ class TimeItem extends TimeItemSkeleton {
   #titleElement
   #titleField
 
-  constructor( title= null, description= null, color= null, categories= [], expandedSize= -1 ) {
+  constructor( title= null, description= null, color= null, categories= [], sizeState= null ) {
     super();
     
     this.#title= title;
     this.#description= description;
     this.#color= color;
     this.#categories= categories;
-    this.#expandedSize= expandedSize;
+    this.#expandedSize= sizeState;
 
     this.#titleElement= null;
     this.#descriptionElement= null;
@@ -296,6 +296,7 @@ class TimeItem extends TimeItemSkeleton {
     optionsMenu.addEventListener('option-branchAbove', () => this.timeLine.branchAbove(this));
     optionsMenu.addEventListener('option-branchBelow', () => this.timeLine.branchBelow(this));
 
+    this.#restoreExpandedSize();
     this.#updateEmptyState();
     this.#updateColorValue();
     this.#updateCategories();
@@ -311,7 +312,10 @@ class TimeItem extends TimeItemSkeleton {
   }
 
   clone() {
-    return new TimeItem( this.#title, this.#description, this.#color, this.#categories, this.#expandedSize );
+    // Encode the size state (see #restoreExpandedSize)
+    const size= this.#getCurrentExpandedSize();
+    const sizeState= size < 0 ? this.#expandedSize : -size;
+    return new TimeItem( this.#title, this.#description, this.#color, this.#categories, sizeState );
   }
 
   extractAsClone() {
@@ -371,6 +375,18 @@ class TimeItem extends TimeItemSkeleton {
     const currentHeight= parseInt( this.#descriptionElement.style.height ) || 30;
     const isCollapsed= this.#expandedSize >= 0 && currentHeight === 30;
     return isCollapsed ? -1 : currentHeight;
+  }
+
+  #restoreExpandedSize() {
+    // Restore the text field size from the size state set in the constructor, which is either
+    // null: Nothing set, <0: item is expanded, >=0: item is collapsed (hence the expanded size is > 0)
+    if( this.#expandedSize === null ) {
+      this.#expandedSize= -1;
+
+    } else if( this.#expandedSize < 0 ) {
+      this.#descriptionElementHeight= -this.#expandedSize;
+      this.#expandedSize= -1;
+    }
   }
 
   toggleDescriptionCollapse() {
