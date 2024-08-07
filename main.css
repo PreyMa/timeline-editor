@@ -551,6 +551,7 @@ dialog {
   border: none;
   border-radius: 5px;
   box-shadow: 2px 2px 3px 2px #c5c5c5;
+  max-width: 80vw;
 
   font-family: sans-serif;
 }
@@ -563,6 +564,7 @@ dialog {
     flex-direction: row;
     justify-content: flex-start;
     gap: 0.5rem;
+    max-width: 40rem;
 
     button {
       display: flex;
