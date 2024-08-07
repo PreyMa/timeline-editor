@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="main.css">
+  <script type="module" src="main.js" defer></script>
+  <title>TimeLine</title>
+</head>
+<body>
+  <template id="drop-down-template">
+    <div class="icon">⋯</div>
+    <ul class="items"></ul>
+  </template>
+
+  <template id="menu-bar-template">
+    <section>
+      <input class="name-field" type="text">
+    </section>
+    <section>
+      <button class="open-button" title="Open">📁</button>
+      <button class="save-button" title="Save">💾</button>
+    </section>
+    <section>
+      <button class="add-timeline-button" title="Add TimeLine">➕</button>
+    </section>
+    <section>
+      <button class="category-panel-button" title="View category">🏷️</button>
+    </section>
+    <div class="spacer"></div>
+    <section>
+      <button class="settings-button">⚙</button>
+    </section>
+  </template>
+
+  <template id="time-board-template">
+    <div class="grid layer"></div>
+    <div class="line layer"><div></div></div>
+    <div class="item layer"><div></div></div>
+  </template>
+
+  <template id="time-item-skeleton-template">
+    <div class="extension-point top"></div>
+    <div class="content" draggable="true">
+      <div class="indicator"><span></span></div>
+      <div class="fields"></div>
+    </div>
+    <div class="extension-point bottom"></div>
+  </template>
+
+  <template id="time-line-template">
+    <div>
+      <div class="controls">
+        <div class="drag-point">✥</div>
+        <div class="select-children">↪</div>
+        <div class="link-to-parent">↢</div>
+        <div class="unlink-from-parent">⇷</div>
+      </div>
+      <div class="content">
+        <div class="items"></div>
+        <div class="resizer"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="time-item-fields-template">
+    <div class="title">
+      <h3>Add Title</h3>
+      <input type="text" class="title-field" placeholder="Add Title">
+      <drop-down class="options">
+        <span data-option="colorAsAbove">Color as above</span>
+        <span data-option="colorAsBelow">Color as below</span>
+        <span data-option="selectColor">Select color</span>
+        <span data-option="removeColor">Remove color</span>
+        <span class="spacer"></span>
+        <span data-option="branchAbove">Branch above</span>
+        <span data-option="branchBelow">Branch below</span>
+        <span class="spacer"></span>
+        <span data-option="duplicate">Duplicate</span>
+        <span data-option="remove">Remove</span>
+      </drop-down>
+    </div>
+    <div class="categories">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="description">
+      <textarea></textarea>
+      <button class="collapse-button"> - </button>
+    </div>
+  </template>
+
+  <template id="time-item-branch-template">
+    <div class="cross-line"></div>
+  </template>
+
+  <template id="branch-line-template">
+    <div class="left"></div>
+    <div class="right"></div>
+  </template>
+
+  <template id="category-panel-template">
+    <div class="modes">
+      <button data-mode="color">Color</button>
+      <button data-mode="category">Category</button>
+    </div>
+    <div class="colors"></div>
+    <div class="items"></div>
+  </template>
+
+  <dialog id="color-selector">
+    <form method="dialog">
+      <p>
+        <label for="color-field">Color:</label>
+        <input type="color" id="color-field" name="colorField"/>
+        <label for="color-name-field">Name:</label>
+        <input type="text" id="color-name-field" name="nameField" />
+      </p>
+      <div id="known-colors-list">
+
+      </div>
+      <div>
+        <button class="cancel" type="reset">Cancel</button>
+        <button type="submit" value="submit">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="category-selector">
+    <form method="dialog">
+      <div id="set-categories-list"></div>
+      <div>
+        <button id="add-category" type="button">Add</button>
+      </div>
+      <div>
+        <button class="cancel" type="reset">Cancel</button>
+        <button type="submit" value="submit">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settings">
+    <form method="dialog">
+      <h3>Grid</h3>
+      <section>
+        <label for="grid-opacity-field">Opacity:</label>
+        <input type="range" id="grid-opacity-field" name="gridOpacity" min="0" max="1" step="0.05"/>
+        <label for="grid-size-field">Size:</label>
+        <select id="grid-size-field" name="gridSize">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50" selected>50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+        </select>
+      </section>
+      <div>
+        <button class="cancel" type="reset">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <header>
+    <menu-bar></menu-bar>
+  </header>
+  <main>
+    <time-board>
+      <time-line>
+        <time-item></time-item>
+        <time-item></time-item>
+        <time-item></time-item>
+      </time-line>
+    </time-board>
+  </main>
+  <aside>
+
+  </aside>
+</body>
+</html>
