@@ -127,7 +127,10 @@ export class TimeBoard extends BaseComponent(HTMLElement) {
 
   createItem() {
     // Go to the right until a free spot is found
-    const pos= this.findFreeItemSpot( new Vector(100, 100), new Vector(100, 0) )
+    const startPos= this.#grid.snap(
+      new Vector(this.scrollLeft, this.scrollTop).move( 100, 100 )
+    );
+    const pos= this.findFreeItemSpot( startPos, new Vector(100, 0) )
     return this.createItemAt( pos );
   }
 
