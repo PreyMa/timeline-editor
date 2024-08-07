@@ -158,6 +158,11 @@ export class TimeBoard extends BaseComponent(HTMLElement) {
     }
   }
 
+  scrollTo( vec ) {
+    this.scrollLeft= vec.x;
+    this.scrollTop= vec.y;
+  }
+
   #computeExtent() {
     let width= 0;
     let height= 0;
@@ -197,6 +202,8 @@ export class TimeBoard extends BaseComponent(HTMLElement) {
     this._forEachChild( this.#itemsElement, item => {
       projectFile.addTimeLine( item );
     });
+
+    projectFile.viewportPosition= new Vector(this.scrollLeft, this.scrollTop);
   }
 
   loadProject( projectFile ) {
@@ -222,6 +229,8 @@ export class TimeBoard extends BaseComponent(HTMLElement) {
 
     this.#enableExtentUpdates= true;
     this.ensureExtent();
+
+    this.scrollTo( projectFile.viewportPosition );
   }
 
   findItemsInOrder( filter ) {
